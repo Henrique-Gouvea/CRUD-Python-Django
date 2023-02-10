@@ -9,4 +9,4 @@ class User(models.Model):
     email = models.EmailField(max_length=500)
 
     class Meta:
-        db_table = 'users'
+        db_table = 'user'
