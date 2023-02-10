@@ -17,5 +17,17 @@ def userAPI(request, id=0):
         users_serializer = UserSerializer(data=user_data)
         if users_serializer.is_valid():
             users_serializer.save()
-            return JsonResponse("Add Sucessfully", safe=False)
+            return JsonResponse('Add Sucessfully', safe=False)
         return JsonResponse('Failed')
+    elif request.method == 'PUT':
+        user_data = JSONParser().parse(request)
+        user = User.objects.get(UserId=user_data['id'])
+        users_serializer = UserSerializer(user, data=user_data)
+        if users_serializer.is_valid():
+            users_serializer.save()
+            return JsonResponse('Update Sucessfully', safe=False)
+        return JsonResponse('Failed')
+    elif request.method == 'DELETE':
+        user = User.objects.get(id)
+        user.delete()
+        return JsonResponse('Deleted Sucessfully', safe=False)
