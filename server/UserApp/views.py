@@ -21,13 +21,14 @@ def userAPI(request, id=0):
         return JsonResponse('Failed')
     elif request.method == 'PUT':
         user_data = JSONParser().parse(request)
-        user = User.objects.get(UserId=user_data['id'])
-        users_serializer = UserSerializer(user, data=user_data)
+        user = User.objects.get(id=id)
+        user.__dict__.update({ **user.__dict__, **user_data})
+        users_serializer = UserSerializer(user, data=user.__dict__)
         if users_serializer.is_valid():
             users_serializer.save()
             return JsonResponse('Update Sucessfully', safe=False)
         return JsonResponse('Failed')
     elif request.method == 'DELETE':
-        user = User.objects.get(id)
+        user = User.objects.get(id=id)
         user.delete()
         return JsonResponse('Deleted Sucessfully', safe=False)

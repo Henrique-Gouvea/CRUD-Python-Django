@@ -1,6 +1,7 @@
-from django.urls import path, include
-from .views import home
+from django.urls import path
+from .views import userAPI
 
 urlpatterns = [
-    path('', home)
+    path('', userAPI),
+    path('<int:id>', userAPI)
 ]
